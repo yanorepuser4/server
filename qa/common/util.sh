@@ -498,6 +498,7 @@ remove_array_outliers() {
     local -n arr=$1
     local percent=$2
     local length=${#arr[@]}
+    echo "${arr[*]}"
 
     if [ "$length" -le 1 ]; then
         return
