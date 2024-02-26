@@ -98,6 +98,7 @@ docker pull $TENSORRT_IMAGE
 # Run the TensorRT model generation script inside the TensorRT container
 docker run \
   $DOCKER_GPU_ARGS \
+  -v compat_libs_volume:/usr/local/cuda-12.2/compat/ \
   --rm --entrypoint $CONTAINER_SOURCE_DIR/$TRT_MODEL_SCRIPT \
   --mount type=bind,source=$HOST_SOURCE_DIR,target=$CONTAINER_SOURCE_DIR \
   --mount type=bind,source=$HOST_SHAPEDESTDIR,target=$CONTAINER_SHAPEDESTDIR \
