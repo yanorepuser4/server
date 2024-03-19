@@ -1093,7 +1093,6 @@ RUN patchelf --add-needed /usr/local/cuda/lib64/stubs/libcublasLt.so.12 backends
     if "tensorrtllm" in backends:
         df += """
 # Remove TRT contents that are not needed in runtime
-ENV TRT_ROOT=/usr/local/tensorrt
 RUN ARCH="$(uname -i)" \\
       && rm -fr ${TRT_ROOT}/bin ${TRT_ROOT}/targets/${ARCH}-linux-gnu/bin ${TRT_ROOT}/data \\
       && rm -fr  ${TRT_ROOT}/doc ${TRT_ROOT}/onnx_graphsurgeon ${TRT_ROOT}/python \\
@@ -1256,9 +1255,7 @@ RUN apt-get update \\
     if "vllm" in backends:
         # [DLIS-5606] Build Conda environment for vLLM backend
         # Remove Pip install once vLLM backend moves to Conda environment.
-        # TODO: remove condition on architecutre once the vLLM backend is supports arm64
-        if platform.machine() == "x86_64":
-            df += """
+        df += """
 # vLLM needed for vLLM backend
 RUN pip3 install vllm=={}
 """.format(
