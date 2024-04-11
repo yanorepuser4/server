@@ -1073,6 +1073,7 @@ COPY --chown=1000:1000 build/install tritonserver
 
 WORKDIR /opt/tritonserver
 COPY --chown=1000:1000 NVIDIA_Deep_Learning_Container_License.pdf .
+RUN find /opt/tritonserver -name *so -exec dirname {} \; | sort -u > /etc/ld.so.conf.d/tritonserver.conf
 
 """
     if not FLAGS.no_core_build:
@@ -1117,9 +1118,8 @@ RUN ARCH="$(uname -i)" \\
 RUN python3 -m pip install /opt/tritonserver/backends/tensorrtllm/tensorrt_llm-*.whl -U --pre --extra-index-url https://pypi.nvidia.com \\
         && rm -fv /opt/tritonserver/backends/tensorrtllm/tensorrt_llm-*.whl
 RUN find /usr -name libtensorrt_llm.so -exec dirname {} \; > /etc/ld.so.conf.d/tensorrt-llm.conf
-RUN find /opt/tritonserver -name libtritonserver.so -exec dirname {} \; > /etc/ld.so.conf.d/triton-tensorrtllm-worker.conf
 
-ENV LD_LIBRARY_PATH=/usr/local/tensorrt/lib/:/opt/tritonserver/backends/tensorrtllm:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/usr/local/tensorrt/lib/:$LD_LIBRARY_PATH
 """
     with open(os.path.join(ddir, dockerfile_name), "w") as dfile:
         dfile.write(df)
