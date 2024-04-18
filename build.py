@@ -1255,7 +1255,7 @@ RUN apt-get update \\
     if "vllm" in backends:
         df += """
 # vLLM needed for vLLM backend
-RUN pip3 install vllm=={}
+RUN VLLM_INSTALL_PUNICA_KERNELS=1 pip3 install vllm=={}
 """.format(
             TRITON_VERSION_MAP[FLAGS.version][6]
         )
