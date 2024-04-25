@@ -213,7 +213,7 @@ model.
 
 * If only the model instance configuration on the 'config.pbtxt' is modified
 (i.e. increasing/decreasing the instance count), then Triton will update the
-model rather then reloading it, when either a load request is received under
+model rather than reloading it, when either a load request is received under
 [Model Control Mode EXPLICIT](#model-control-mode-explicit) or change to the
 'config.pbtxt' is detected under
 [Model Control Mode POLL](#model-control-mode-poll).
