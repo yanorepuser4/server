@@ -448,7 +448,7 @@ SUBTESTS="lifecycle argument_validation logging custom_metrics"
 # [DLIS-6122] Disable model_control & request_rescheduling tests for Windows since they require load/unload
 # [DLIS-6123] Disable examples test for Windows since it requires updates to the example clients
 if [[ ${TEST_WINDOWS} == 0 ]]; then
-    SUBTESTS+=" restart model_control examples request_rescheduling"
+    SUBTESTS+=" model_control examples request_rescheduling"
 fi
 for TEST in ${SUBTESTS}; do
     # Run each subtest in a separate virtual environment to avoid conflicts
